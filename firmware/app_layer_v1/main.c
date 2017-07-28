@@ -115,7 +115,8 @@ void AppCallback(const void* data, UINT32 data_len, int_or_ptr_t arg) {
 
 int main() {
   int count = 0;
-
+  STATE prev_state = STATE_INIT;
+  
   log_init();
   log_printf("***** Hello from app-layer! *******");
 
@@ -123,6 +124,12 @@ int main() {
   ConnectionInit();
   while (1) {
     ConnectionTasks();
+
+    if(state != prev_state) {
+        count = 0;
+        prev_state = state;
+    }
+
     switch (state) {
       case STATE_INIT:
         log_printf("STATE_INIT");
@@ -138,8 +145,7 @@ int main() {
           state = STATE_WAIT_CHANNEL_OPEN;
         } else {
           count++;
-          if (count > 100) {
-              count = 0;
+          if (count > 200) {
               state = STATE_INIT;
               ConnectionInit();
               log_printf("Re-initializing from STATE_OPEN_CHANNEL");
