@@ -30,6 +30,8 @@
 #ifndef __LOGGING_H__
 #define __LOGGING_H__
 
+//#define ENABLE_LOGGING
+
 #ifdef ENABLE_LOGGING
   #include <stdio.h>
   #include "uart2.h"
@@ -37,7 +39,7 @@
 
   #define STRINGIFY(x) #x
   #define TOSTRING(x) STRINGIFY(x)
-  
+
   void log_print_buf(const void* buf, int size);
   #define log_printf(f, ...) printf("[%s:%d] " f "\r\n", __FILE__, __LINE__, ##__VA_ARGS__)
   void log_init();

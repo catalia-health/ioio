@@ -126,6 +126,7 @@ static void CDCSend(int h, const void *data, int size) {
 }
 
 static int CDCCanSend(int h) {
+    log_printf("CDCCanSend");
   assert(h == 0);
   if (channel_state != CHANNEL_OPEN) return 0;
   return USBUSARTIsTxTrfReady();
@@ -156,4 +157,3 @@ const CONNECTION_FACTORY cdc_connection_factory = {
   CDCCanSend,
   CDCMaxPacketSize
 };
-

@@ -129,10 +129,14 @@ static void AccessorySend(int h, const void *data, int size) {
 
 static int AccessoryCanSend(int h) {
   BYTE err;
+  log_printf("AccessoryCanSend, h = %d", h);
+  log_printf("AccessoryCanSend, channel_state = %d", channel_state);
   assert(h == 0);
   assert(channel_state <= CHANNEL_OPEN);
   if (channel_state != CHANNEL_OPEN) return 0;
   int res = USBHostAndroidTxIsComplete(&err, ANDROID_INTERFACE_ACC);
+  log_printf("AccessoryCanSend, res = %d", res);
+  log_printf("AccessoryCanSend, err = %ud", (unsigned int)err);
   if (res && err != USB_SUCCESS) {
     log_printf("Write failed with error code %d", err);
     USBHostAndroidReset();

@@ -116,7 +116,7 @@ void AppCallback(const void* data, UINT32 data_len, int_or_ptr_t arg) {
 int main() {
   int count = 0;
   STATE prev_state = STATE_INIT;
-  
+
   log_init();
   log_printf("***** Hello from app-layer! *******");
 
@@ -125,15 +125,15 @@ int main() {
   while (1) {
     ConnectionTasks();
 
-    if(state != prev_state) {
-        count = 0;
-        prev_state = state;
-    }
+//    if(state != prev_state) {
+//        count = 0;
+//        prev_state = state;
+//    }
 
     switch (state) {
       case STATE_INIT:
         log_printf("STATE_INIT");
-        count = 0;
+//        count = 0;
         handle = INVALID_CHANNEL_HANDLE;
         state = STATE_OPEN_CHANNEL;
         break;
@@ -145,10 +145,15 @@ int main() {
           state = STATE_WAIT_CHANNEL_OPEN;
         } else {
           count++;
-          if (count > 200) {
+          if ((count % 1000) == 0) {
+              state = STATE_INIT;
+              log_printf("HardReset from STATE_OPEN_CHANNEL");
+              HardReset();
+          } else
+          if ((count % 200) == 0) {
               state = STATE_INIT;
               ConnectionInit();
-              log_printf("Re-initializing from STATE_OPEN_CHANNEL");
+              log_printf("ConnectionInit from STATE_OPEN_CHANNEL");
           }
         }
         break;
@@ -160,7 +165,22 @@ int main() {
           log_printf("Channel open");
           AppProtocolInit(handle);
           state = STATE_CONNECTED;
+      } else {
+        count++;
+        if ((count % 1500) == 0) {
+            //state = STATE_INIT;
+            //ConnectionInit();
+            //log_printf("Re-initializing from STATE_WAIT_CHANNEL_OPEN");
+            ////////log_printf("Would re-initialize from STATE_WAIT_CHANNEL_OPEN, but not");
+            ////////count = 0;
+// state = STATE_INIT;
+// log_printf("USBShutdown from STATE_WAIT_CHANNEL_OPEN");
+// USBShutdown();
+// USBInitialize();
+// log_printf("HardReset from STATE_WAIT_CHANNEL_OPEN");
+// HardReset();
         }
+      }
         break;
 
       case STATE_CONNECTED:

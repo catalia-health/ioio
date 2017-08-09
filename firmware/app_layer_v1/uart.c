@@ -214,8 +214,10 @@ void UARTTransmit(int uart_num, const void* data, int size) {
   DEFINE_INTERRUPT_HANDLERS(1)
 #endif
 
-#if NUM_UART_MODULES >= 2 && !ENABLE_LOGGING
-  DEFINE_INTERRUPT_HANDLERS(2)
+#if NUM_UART_MODULES >= 2
+    #ifndef ENABLE_LOGGING
+        DEFINE_INTERRUPT_HANDLERS(2)
+    #endif
 #endif
 
 #if NUM_UART_MODULES >= 3

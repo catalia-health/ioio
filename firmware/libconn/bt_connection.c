@@ -236,6 +236,7 @@ static void BTSend(int h, const void *data, int size) {
 }
 
 static int BTCanSend(int h) {
+    log_printf("BTCanSend");
   assert(h == 0);
   return rfcomm_can_send(rfcomm_channel_id);
 }
