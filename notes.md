@@ -9,7 +9,7 @@ Change all firmware/lib* projects to large code and large data
 Change app_layer_1 to large code and large data
 
 To build:
-docker run --rm -it -v `pwd`:/ioio --entrypoint=/bin/bash garnold/mplab:1.25-2
+docker run --rm -it -v `pwd`:/ioio --entrypoint=/bin/bash catalia/mplab:1.25-2
 cd /ioio/ytai
 ./tools/make-all all
 ./tools/make-ioio-bundle firmware/app_layer_v1/dist mcb-2 IOIO0030
