@@ -22,7 +22,7 @@ ioiodude:
 ground boot pin (near the sparkfun logo)
 plug usb into PC (yellow light comes on, in bootloader mode)
 remove ground from step 1
-./ioiodude --port=/dev/ttyACM0 write ytai/mcb-13.zip./ioiodude --port=/dev/ttyACM0 write ytai/mcb-13.zip
+./ioiodude --port=/dev/ttyACM0 write ytai/mcb-13.zip
 
 logging:
 sudo cat /dev/ttyUSB0 | sed -u '/^\s*$/d' | ts
